@@ -1,0 +1,14 @@
+# macOS 与 Windows 系统文件
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# 密钥与私人配置
+.env
+.env.*
+!.env.example
+
+# 常见临时文件
+*.log
+tmp/
+temp/
