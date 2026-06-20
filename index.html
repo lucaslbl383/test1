@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="An interactive A Level physics tool for exploring electric fields, electric potential and force on a test charge.">
+  <title>A Level Electric Field Explorer</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main>
+    <section class="lab-section" id="lab">
+      <div class="wrap">
+        <div class="section-heading">
+          <div>
+            <h2>A Level Electric Field Explorer</h2>
+          </div>
+          <p>Arrows show the direction of the electric field; brighter arrows indicate a stronger field. Add equipotential lines and drag the yellow probe to take measurements.</p>
+        </div>
+
+        <div class="lab-toolbar">
+          <div class="scenario-tabs" role="group" aria-label="Select a charge arrangement">
+            <button class="scenario active" data-scene="positive">Positive point charge</button>
+            <button class="scenario" data-scene="negative">Negative point charge</button>
+            <button class="scenario" data-scene="dipole">Electric dipole</button>
+            <button class="scenario" data-scene="like">Two like charges</button>
+            <button class="scenario" data-scene="plate">Charged plate</button>
+            <button class="scenario" data-scene="free">Free exploration</button>
+          </div>
+          <div class="view-switch" role="group" aria-label="Display controls">
+            <button class="view-button" id="togglePotential" aria-pressed="false">Show equipotential lines</button>
+            <button class="view-button" id="toggleFieldHighlight" aria-pressed="false">Highlight field lines</button>
+            <label class="spacing-control" for="potentialSpacing">
+              <span>Equipotential spacing</span>
+              <input id="potentialSpacing" type="range" min="0.6" max="2" value="1" step="0.2">
+              <output id="potentialSpacingValue">1.0×</output>
+            </label>
+            <div class="zoom-controls" role="group" aria-label="Diagram zoom">
+              <button id="zoomOut" aria-label="Zoom out">−</button>
+              <output id="zoomValue">100%</output>
+              <button id="zoomIn" aria-label="Zoom in">+</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="free-controls" id="freeControls">
+          <div class="free-tools" role="group" aria-label="Free exploration tools">
+            <button class="free-tool active positive-tool" data-tool="positive">+ Add positive charge</button>
+            <button class="free-tool negative-tool" data-tool="negative">− Add negative charge</button>
+            <button class="free-tool" data-tool="probe">◎ Move field probe</button>
+            <button class="clear-tool" id="clearFreeCharges">Clear all charges</button>
+          </div>
+          <p id="freeStatus" aria-live="polite">Select a charge, then click anywhere in the field. Drag a charge to move it; double-click it to remove it.</p>
+        </div>
+
+        <div class="lab-grid">
+          <div class="canvas-card">
+            <canvas id="fieldCanvas" aria-label="Interactive electric field diagram. Drag the probe to change the measurement position."></canvas>
+            <div class="canvas-legend" aria-hidden="true">
+              <span><i class="legend-dot positive-dot"></i> Positive charge</span>
+              <span><i class="legend-dot negative-dot"></i> Negative charge</span>
+              <span><i class="legend-dot probe-dot"></i> Field probe</span>
+            </div>
+            <div class="potential-legend" id="potentialLegend" aria-hidden="true">
+              <i></i><span>Equipotential lines · values in V</span>
+            </div>
+            <div class="drag-hint" id="dragHint">Drag the <span>◎</span> probe to explore</div>
+          </div>
+
+          <aside class="meter-card" aria-live="polite">
+            <div class="meter-topline">
+              <span>Live measurement</span>
+              <span class="live"><i></i> LIVE</span>
+            </div>
+            <div class="meter-block emphasis">
+              <span class="meter-label">Electric field strength E</span>
+              <strong id="fieldMagnitude">0.00</strong>
+              <small>N/C</small>
+              <div class="strength-bar"><i id="strengthFill"></i></div>
+              <div class="potential-row">
+                <span>Electric potential V</span>
+                <span><b id="potentialValue">0.0</b> V</span>
+              </div>
+            </div>
+            <div class="meter-pair">
+              <div class="meter-block">
+                <span class="meter-label">Direction</span>
+                <strong id="fieldAngle">0°</strong>
+                <small id="directionWord">right</small>
+              </div>
+              <div class="compass" aria-hidden="true">
+                <div id="compassArrow">↑</div>
+              </div>
+            </div>
+            <div class="meter-block force-block">
+              <label for="testCharge">Test charge q₀</label>
+              <div class="slider-row">
+                <input id="testCharge" type="range" min="-3" max="3" value="1" step="1">
+                <output id="testChargeValue">+1 nC</output>
+              </div>
+              <p>Force on test charge: <strong id="forceValue">0.00 μN</strong></p>
+              <small id="forceHint">A positive test charge experiences a force in the direction of the field</small>
+            </div>
+            <button id="resetProbe" class="reset-button">Reset probe position</button>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
